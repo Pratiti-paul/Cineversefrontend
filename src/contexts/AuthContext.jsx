@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
+
 const AuthContext = createContext();
 
 export const useAuth = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       // Verify with server (this will also check cookies)
-      const response = await fetch('http://localhost:8080/api/auth/verify', {
+      const response = await fetch(`${API_URL}/api/auth/verify`, {
         method: 'GET',
         credentials: 'include', // Include cookies
         headers: {
@@ -63,7 +65,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
