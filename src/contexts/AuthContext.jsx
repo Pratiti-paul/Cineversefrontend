@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "https://cineversebackend-jqtg.onrender.com";
+console.log("🔗 API_URL is:", API_URL);
 
 const AuthContext = createContext();
 
