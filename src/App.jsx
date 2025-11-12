@@ -1,32 +1,33 @@
-import { useState } from 'react';
-import './App.css';
-import Signup from './pages/Signup.jsx';
-import Login from './pages/Login.jsx';
-import WelcomePage from './pages/WelcomePage.jsx';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import WelcomePage from './pages/WelcomePage';
+import LoadingSpinner from './components/LoadingSpinner';
 
-function App() {
-  const [view, setView] = useState('signup');
-  const [user, setUser] = useState(null);
+function AppRoutes() {
+  const { user, loading } = useAuth();
 
-  const handleSignupSuccess = () => setView('login');
-  const handleLoginSuccess = (u) => {
-    setUser(u);
-    setView('welcome');
-  };
-  const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setView('login');
-  };
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
-    <>
-      {view === 'signup' && <Signup onSuccess={handleSignupSuccess} />}
-      {view === 'login' && <Login onSuccess={handleLoginSuccess} />}
-      {view === 'welcome' && <WelcomePage username={user?.username || user?.email || 'User'} onLogout={handleLogout} />}
-    </>
+    <Routes>
+      <Route path="/" element={<Navigate to={user ? '/welcome' : '/signup'} />} />
+      <Route path="/signup" element={user ? <Navigate to="/welcome" /> : <Signup />} />
+      <Route path="/login" element={user ? <Navigate to="/welcome" /> : <Login />} />
+      <Route path="/welcome" element={user ? <WelcomePage /> : <Navigate to="/login" />} />
+    </Routes>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </AuthProvider>
+  );
+}
