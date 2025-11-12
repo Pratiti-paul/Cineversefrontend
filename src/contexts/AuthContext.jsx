@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
-  const API_URL = import.meta.env.VITE_API_URL;
+
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (userData) => {
     try {
-      const response = await fetch('http://localhost:8080/api/auth/signup', {
+      const response = await fetch(`${API_URL}/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       // Call logout endpoint to clear server-side cookie
-      await fetch('http://localhost:8080/api/auth/logout', {
+      await fetch(`${API_URL}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       });
