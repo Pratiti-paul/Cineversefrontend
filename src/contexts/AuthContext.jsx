@@ -1,6 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-const API_URL = import.meta.env.VITE_API_URL || "https://cineversebackend-jqtg.onrender.com";
+// const API_URL = import.meta.env.VITE_API_URL || "https://cineversebackend-jqtg.onrender.com";
+// console.log("🔗 API_URL is:", API_URL);
+
+const API_URL = import.meta.env.VITE_API_URL;
 console.log("🔗 API_URL is:", API_URL);
+
 
 const AuthContext = createContext();
 
@@ -18,14 +22,13 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(null);
 
-  // Check if user is authenticated on app load
   useEffect(() => {
     checkAuth();
   }, []);
 
   const checkAuth = async () => {
     try {
-      // First check localStorage for token
+     
       const savedToken = localStorage.getItem('auth_token');
       const savedUser = localStorage.getItem('user');
 
@@ -34,7 +37,6 @@ export const AuthProvider = ({ children }) => {
         setUser(JSON.parse(savedUser));
       }
 
-      // Verify with server (this will also check cookies)
       const response = await fetch(`${API_URL}/api/auth/verify`, {
         method: 'GET',
         credentials: 'include', // Include cookies
@@ -49,11 +51,10 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user);
         setToken(data.token);
         
-        // Update localStorage
+    
         localStorage.setItem('auth_token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
       } else {
-        // Clear invalid auth data
         clearAuth();
       }
     } catch (error) {
@@ -71,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // Include cookies
+        credentials: 'include', 
         body: JSON.stringify(credentials),
       });
 
@@ -81,11 +82,9 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store user and token
       setUser(data.user);
       setToken(data.token);
       
-      // Store in localStorage as backup
       localStorage.setItem('auth_token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
