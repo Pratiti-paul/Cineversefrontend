@@ -1,0 +1,54 @@
+.md-page { background: var(--bg); color: var(--text); min-height: 100vh; }
+
+.md-hero {
+  height: 480px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.md-hero-overlay {
+  width: 100%;
+  max-width: 1100px;
+  padding: 36px;
+  background: linear-gradient(90deg, rgba(6,22,21,0.85) 0%, rgba(6,22,21,0.5) 40%, rgba(6,22,21,0.85) 100%);
+  color: var(--text);
+}
+.md-title {
+  font-size: 48px;
+  margin: 0 0 12px 0;
+}
+.md-year { font-weight: 600; color: var(--muted); margin-left: 8px; }
+.md-meta { display:flex; gap: 12px; align-items:center; margin-bottom: 16px; }
+.md-rating { background: rgba(0,0,0,0.5); padding: 8px 12px; border-radius: 18px; font-weight:700; color: var(--accent); }
+.md-genres, .md-runtime { color: var(--muted); background: rgba(255,255,255,0.02); padding: 6px 10px; border-radius: 8px; }
+
+.md-ctas { margin-top: 16px; }
+.md-btn { margin-right: 12px; padding: 10px 14px; border-radius: 24px; border: none; cursor: pointer; }
+.md-watch { background: linear-gradient(90deg, var(--accent), var(--accent-dark)); color: #012; }
+.md-more { background: rgba(255,255,255,0.06); color: var(--text); }
+
+.container { max-width: 1200px; margin: 20px auto; padding: 0 16px; }
+
+.md-overview { margin: 28px 0; }
+.md-overview h2 { font-size: 20px; color: var(--text); margin-bottom: 8px; }
+.md-overview p { color: var(--muted); line-height: 1.6; }
+
+.md-reviews { margin: 28px 0; }
+.md-reviews h2 { font-size: 20px; margin-bottom: 12px; }
+.md-reviews-list { display:flex; flex-direction:column; gap: 12px; }
+.md-review { background: rgba(255,255,255,0.02); padding: 16px; border-radius: 12px; }
+.md-review-head { display:flex; align-items:center; gap: 12px; justify-content:space-between; }
+.md-avatar { width:44px; height:44px; border-radius:50%; background: linear-gradient(180deg,var(--accent),var(--accent-dark)); color: #012; display:flex; align-items:center; justify-content:center; font-weight:700; }
+.md-review-author { font-weight:700; color: var(--text); }
+.md-review-date { font-size:12px; color: var(--muted); }
+.md-review-rating { background: rgba(255,255,255,0.04); padding:6px 10px; border-radius:12px; color: var(--muted); }
+
+.md-review-body { margin-top: 8px; color: var(--muted); }
+
+.md-no-reviews { color: var(--muted); }
+
+.md-similar { margin: 28px 0; }
+.md-similar h2 { margin-bottom: 12px; }
+.md-similar-row { display:flex; gap:12px; overflow-x:auto; padding-bottom: 8px; }

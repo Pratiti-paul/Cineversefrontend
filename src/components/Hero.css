@@ -1,0 +1,60 @@
+.hero {
+  height: 480px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hero:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 22, 21, 0.85) 20%,
+    rgba(6, 22, 21, 0.5) 60%,
+    rgba(6, 22, 21, 0.85) 100%
+  );
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  padding-left: 48px;
+  max-width: 720px;
+}
+
+.hero h1 {
+  font-size: 44px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.tagline {
+  color: var(--muted);
+  max-width: 60%;
+}
+
+.hero-ctas {
+  margin-top: 16px;
+}
+
+.cta {
+  padding: 10px 14px;
+  border-radius: 25px;
+  cursor: pointer;
+  border: none;
+  margin-right: 12px;
+}
+
+.cta.primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  color: #012;
+}
+
+.cta.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}

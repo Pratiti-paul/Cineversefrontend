@@ -1,0 +1,35 @@
+:root {
+  --bg: #061615;
+  --panel: #072a28;
+  --accent: #2fe6c7;
+  --accent-dark: #12bfa0;
+  --muted: #9fded0;
+  --text: #e9f7f4;
+}
+
+/* Improve text contrast on dark backgrounds */
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Utility: subtle card background */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Buttons already fine; add stronger shadow for legibility */
+.btn {
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #012;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
