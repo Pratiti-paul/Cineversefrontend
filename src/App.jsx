@@ -5,10 +5,11 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import MovieDetails from "./pages/MovieDetails"; 
-import Watchlist from "./pages/Watchlist";
 import Nav from "./components/Nav";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Detailspage from "./pages/Detailspage";
+import Watchlist from "./pages/Watchlist";
+import Profile from "./pages/Profile";
 
 // Protect routes that NEED auth
 function RequireAuth({ children }) {
@@ -32,15 +33,6 @@ function AppRoutes() {
 
       <Route path="/movie/:id" element={<Detailspage />} />
 
-      <Route
-        path="/watchlist"
-        element={
-          <RequireAuth>
-            <Watchlist />
-          </RequireAuth>
-        }
-      />
-
       
       <Route
         path="/login"
@@ -62,6 +54,7 @@ function AppRoutes() {
 
 
       <Route path="/welcome" element={<Navigate to="/" replace />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

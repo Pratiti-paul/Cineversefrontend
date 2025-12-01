@@ -35,7 +35,6 @@ export default function Home() {
     setLoading(true);
     setError("");
 
-    // Fire parallel requests for each list
     const calls = {
       trending: api.get("/api/movies/trending"),
       latest: api.get("/api/movies/latest?page=1"),
@@ -53,7 +52,6 @@ export default function Home() {
           const key = keys[idx];
           if (r.status === "fulfilled") {
             const data = r.value.data;
-            // TMDb returns { results: [...] } for these endpoints
             const items = (data && data.results) ? data.results.slice(0, 18) : [];
             newLists[key] = items;
             if (key === "trending" && items.length) {
@@ -89,3 +87,15 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+

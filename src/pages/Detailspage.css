@@ -7,7 +7,7 @@
   position: relative;
   display: flex;
   align-items: center;
-}
+} 
 .md-hero-overlay {
   width: 100%;
   max-width: 1100px;
@@ -35,20 +35,157 @@
 .md-overview h2 { font-size: 20px; color: var(--text); margin-bottom: 8px; }
 .md-overview p { color: var(--muted); line-height: 1.6; }
 
-.md-reviews { margin: 28px 0; }
-.md-reviews h2 { font-size: 20px; margin-bottom: 12px; }
-.md-reviews-list { display:flex; flex-direction:column; gap: 12px; }
-.md-review { background: rgba(255,255,255,0.02); padding: 16px; border-radius: 12px; }
-.md-review-head { display:flex; align-items:center; gap: 12px; justify-content:space-between; }
-.md-avatar { width:44px; height:44px; border-radius:50%; background: linear-gradient(180deg,var(--accent),var(--accent-dark)); color: #012; display:flex; align-items:center; justify-content:center; font-weight:700; }
-.md-review-author { font-weight:700; color: var(--text); }
-.md-review-date { font-size:12px; color: var(--muted); }
-.md-review-rating { background: rgba(255,255,255,0.04); padding:6px 10px; border-radius:12px; color: var(--muted); }
 
-.md-review-body { margin-top: 8px; color: var(--muted); }
+.md-reviews {
+  margin: 40px 0;
+  text-align: left !important;
+}
 
-.md-no-reviews { color: var(--muted); }
+.md-reviews h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
 
-.md-similar { margin: 28px 0; }
-.md-similar h2 { margin-bottom: 12px; }
-.md-similar-row { display:flex; gap:12px; overflow-x:auto; padding-bottom: 8px; }
+/* review list container */
+.md-reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start !important; 
+}
+
+/* each review card */
+.md-review {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  
+}
+
+.md-review:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+.md-review-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.md-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #0fb59a);
+  color: #012;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+
+/* reviewer name + date */
+.md-review-author {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.md-review-date {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* rating chip on right */
+.md-review-rating {
+  background: rgba(30,209,179,0.15);
+  border: 1px solid rgba(30,209,179,0.25);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* review text */
+.md-review-body {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* message when empty */
+.md-no-reviews {
+  color: var(--muted);
+  opacity: 0.7;
+  font-size: 15px;
+  padding: 12px 0;
+}
+
+
+.md-similar {
+  margin: 28px 0;
+}
+
+.md-similar-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+  gap: 20px;                         
+  align-items: start;               
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 4px;
+}
+
+.md-similar-row > .movie-card,
+.md-similar-row > * {
+  width: 100%;                       
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.md-similar-row .movie-img {
+  aspect-ratio: 2 / 3;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.md-similar-row .meta {
+  border-radius: 0 0 12px 12px;
+}
+
+.md-similar-row .title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
+  overflow: hidden;
+  white-space: normal;
+}
+
+@media (max-width: 1100px) {
+  .md-similar-row { gap: 16px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .md-similar-row .movie-img { aspect-ratio: 2 / 3; }
+}
+@media (max-width: 640px) {
+  .md-similar-row { gap: 12px; grid-template-columns: repeat(2, 1fr); }
+  .md-similar-row .movie-img { aspect-ratio: 2 / 3; }
+}

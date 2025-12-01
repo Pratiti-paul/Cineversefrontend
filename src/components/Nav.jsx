@@ -10,7 +10,6 @@ export default function Nav() {
   const menuRef = useRef();
   const navigate = useNavigate();
 
-  // SEARCH BAR STATE
   const [q, setQ] = useState("");
 
   useEffect(() => {
@@ -45,8 +44,6 @@ export default function Nav() {
     <header className="nav">
       <div className="nav-inner">
         <div className="brand" onClick={() => navigate("/")}>CineVerse</div>
-
-        {/* ✅ NEW WORKING SEARCH BAR */}
         <div className="search" role="search">
           <input
             className="search-input"
@@ -58,11 +55,10 @@ export default function Nav() {
           />
           <button className="search-btn" onClick={submitSearch}>🔍</button>
         </div>
-        {/* END SEARCH BAR */}
 
         <div className="right">
           <Link to="/" className="nav-link">Home</Link>
-          <Link to="/recommendations" className="nav-link">Recommendations</Link>
+          <Link to="/watchlist" className="nav-link">Watchlist</Link>
 
           <div className="profile" ref={menuRef}>
             <button className="profile-btn" onClick={() => setOpen(o => !o)}>
