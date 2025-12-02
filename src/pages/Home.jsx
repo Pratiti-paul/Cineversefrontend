@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../api";             
 import Hero from "../components/Hero";
 import MovieCard from "../components/MovieCard";
+import RankedRow from "../components/RankedRow";
 import "./Home.css";
 
 function Row({ title, items = [] }) {
@@ -31,6 +32,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+
+  
   useEffect(() => {
     setLoading(true);
     setError("");
@@ -76,6 +79,13 @@ export default function Home() {
       <Hero movie={heroMovie} />
       <div className="container">
         {error && <div style={{ color: "#ffb3b3", marginBottom: 12 }}>{error}</div>}
+         <RankedRow
+        title="Top 10 Movies in Netflix Today"
+        items={lists.trending}
+        limit={10}
+        showBadge={true}
+      />
+
 
         <Row title="Trending Now" items={lists.trending} />
         <Row title="Latest Releases" items={lists.latest} />

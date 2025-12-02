@@ -10,6 +10,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import Detailspage from "./pages/Detailspage";
 import Watchlist from "./pages/Watchlist";
 import Profile from "./pages/Profile";
+import Recommendations from "./pages/Recommendations";
 
 // Protect routes that NEED auth
 function RequireAuth({ children }) {
@@ -55,6 +56,8 @@ function AppRoutes() {
 
       <Route path="/welcome" element={<Navigate to="/" replace />} />
       <Route path="/profile" element={<Profile />} />
+
+      <Route path="/recommendations" element={<Recommendations />} />
     </Routes>
   );
 }

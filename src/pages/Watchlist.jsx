@@ -15,7 +15,6 @@ export default function Watchlist() {
     setLoading(true);
     setErr("");
 
-    // Prefer token from context if you have auth; otherwise fallback to localStorage keys
     const token =
       (user && user.token) ||
       localStorage.getItem("token") ||

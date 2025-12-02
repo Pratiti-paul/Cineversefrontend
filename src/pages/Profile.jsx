@@ -1,3 +1,4 @@
+// src/pages/Profile.jsx
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import api from "../api";
@@ -5,51 +6,68 @@ import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const { user, setUser, logout } = useAuth ? useAuth() : { user: null };
+  // get user and setUser if provided by AuthContext
+  const auth = useAuth();
+  // defensive: if useAuth missing, avoid crash
+  const userFromContext = auth?.user ?? null;
+  const setUser = auth?.setUser;
+  const logout = auth?.logout;
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
+  const [serverUser, setServerUser] = useState(null); // authoritative profile from backend
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-  });
+  const [form, setForm] = useState({ name: "", email: "" });
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState("");
   const [err, setErr] = useState("");
   const [watchcount, setWatchcount] = useState(null);
 
-  useEffect(() => {
-    // fetch watchlist count
-    let mounted = true;
-    const token = localStorage.getItem("token") || localStorage.getItem("authToken");
-    if (!token) {
+  // helper: token config
+  const token = localStorage.getItem("token") || localStorage.getItem("authToken") || null;
+  const authConfig = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+
+  // fetch profile and watchlist count
+  const fetchProfileAndCounts = async () => {
+    setLoading(true);
+    setErr("");
+    try {
+      // fetch profile
+      const p = await api.get("/api/user/profile", authConfig);
+      const fetchedUser = p?.data?.user ?? null;
+      setServerUser(fetchedUser);
+
+      // if context has setUser, update it (keep consistent)
+      if (fetchedUser && typeof setUser === "function") {
+        setUser(fetchedUser);
+      }
+
+      // fetch watchlist count
+      const w = await api.get("/api/user/watchlist", authConfig);
+      const arr = Array.isArray(w?.data) ? w.data : w?.data?.results || [];
+      setWatchcount(arr.length);
+    } catch (e) {
+      console.error("Failed fetching profile or watchlist:", e);
+      setErr("Failed to load profile (see console).");
+      setServerUser(null);
       setWatchcount(0);
-      return;
+    } finally {
+      setLoading(false);
     }
+  };
 
-    api
-      .get("/api/user/watchlist", { headers: token ? { Authorization: `Bearer ${token}` } : {} })
-      .then((res) => {
-        if (!mounted) return;
-        const arr = Array.isArray(res.data) ? res.data : res.data?.results || [];
-        setWatchcount(arr.length);
-      })
-      .catch(() => {
-        if (!mounted) return;
-        setWatchcount(0);
-      });
-
-    return () => (mounted = false);
+  useEffect(() => {
+    fetchProfileAndCounts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // keep local form in sync if user changes externally
+  // keep local form in sync with authoritative profile (serverUser) or context if no serverUser yet
   useEffect(() => {
-    setForm({ name: user?.name || "", email: user?.email || "" });
-  }, [user?.name, user?.email]);
+    const source = serverUser ?? userFromContext ?? {};
+    setForm({ name: source.name ?? "", email: source.email ?? "" });
+  }, [serverUser, userFromContext]);
 
-  const handleChange = (e) => {
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
-  };
+  const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -58,28 +76,33 @@ export default function Profile() {
     setSaving(true);
 
     try {
-      // call backend to update profile - change endpoint if your API is different
-      const token = localStorage.getItem("token") || localStorage.getItem("authToken");
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const resp = await api.put("/api/user/profile", form, { headers });
+      const resp = await api.put("/api/user/profile", form, authConfig);
 
-      // if backend returns updated user object, update context (if setUser available)
-      if (resp?.data?.user && typeof setUser === "function") {
-        setUser(resp.data.user);
+      // backend should return updated user under resp.data.user
+      const updatedUser = resp?.data?.user ?? null;
+
+      if (updatedUser) {
+        setServerUser(updatedUser);
+        if (typeof setUser === "function") setUser(updatedUser);
+      } else {
+        // fallback: re-fetch authoritative profile
+        await fetchProfileAndCounts();
       }
 
       setMsg("Profile updated.");
       setEditing(false);
     } catch (error) {
       console.error("profile save error:", error);
-      setErr(error?.response?.data?.message || error.message || "Failed to update profile");
+      const backendMessage = error?.response?.data?.error || error?.response?.data?.message;
+      setErr(backendMessage || error.message || "Failed to update profile");
     } finally {
       setSaving(false);
     }
   };
 
   const handleCancel = () => {
-    setForm({ name: user?.name || "", email: user?.email || "" });
+    const source = serverUser ?? userFromContext ?? {};
+    setForm({ name: source.name ?? "", email: source.email ?? "" });
     setErr("");
     setMsg("");
     setEditing(false);
@@ -95,17 +118,21 @@ export default function Profile() {
     }
   };
 
+  const displayUser = serverUser ?? userFromContext ?? {};
+
   return (
     <div className="profile-page container">
       <div className="profile-back">
-        <button onClick={() => navigate(-1)} className="back-link">← Back to Home</button>
+        <button onClick={() => navigate(-1)} className="back-link">← Back</button>
       </div>
 
       <div className="profile-card">
         <div className="profile-left">
-          <div className="avatar">{(user?.name || "U").charAt(0).toUpperCase()}</div>
-          <div className="name">{user?.name || "Unnamed User"}</div>
-          <div className="email">{user?.email || "No email provided"}</div>
+          <div className="avatar">
+            { (displayUser?.name || "U").charAt(0).toUpperCase() }
+          </div>
+          <div className="name">{displayUser?.name || "Unnamed User"}</div>
+          <div className="email">{displayUser?.email || "No email provided"}</div>
 
           <div className="stats">
             <div className="stat">
@@ -113,7 +140,7 @@ export default function Profile() {
               <div className="stat-label">Watchlist</div>
             </div>
             <div className="stat">
-              <div className="stat-num">{user?.createdAt ? new Date(user.createdAt).getFullYear() : "—"}</div>
+              <div className="stat-num">{displayUser?.createdAt ? new Date(displayUser.createdAt).getFullYear() : "—"}</div>
               <div className="stat-label">Member since</div>
             </div>
           </div>
@@ -128,37 +155,43 @@ export default function Profile() {
         <div className="profile-right">
           <h3>Account Details</h3>
 
-          {!editing && (
-            <div className="details-read">
-              <div className="row"><strong>Name</strong><span>{user?.name || "-"}</span></div>
-              <div className="row"><strong>Email</strong><span>{user?.email || "-"}</span></div>
-              <div className="row"><strong>ID</strong><span>{user?.id || user?.userId || "—"}</span></div>
-            </div>
+          {loading ? (
+            <div>Loading profile…</div>
+          ) : (
+            <>
+              {!editing && (
+                <div className="details-read">
+                  <div className="row"><strong>Name</strong><span>{displayUser?.name || "-"}</span></div>
+                  <div className="row"><strong>Email</strong><span>{displayUser?.email || "-"}</span></div>
+                  <div className="row"><strong>ID</strong><span>{displayUser?.id || displayUser?.userId || "—"}</span></div>
+                </div>
+              )}
+
+              {editing && (
+                <form className="profile-form" onSubmit={handleSave}>
+                  <label>
+                    Name
+                    <input name="name" value={form.name} onChange={handleChange} required />
+                  </label>
+
+                  <label>
+                    Email
+                    <input name="email" type="email" value={form.email} onChange={handleChange} required />
+                  </label>
+
+                  <div className="form-actions">
+                    <button type="button" className="btn btn-ghost" onClick={handleCancel} disabled={saving}>Cancel</button>
+                    <button type="submit" className="btn btn-primary" disabled={saving}>
+                      {saving ? "Saving..." : "Save changes"}
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {msg && <div className="form-msg success">{msg}</div>}
+              {err && <div className="form-msg error">{err}</div>}
+            </>
           )}
-
-          {editing && (
-            <form className="profile-form" onSubmit={handleSave}>
-              <label>
-                Name
-                <input name="name" value={form.name} onChange={handleChange} required />
-              </label>
-
-              <label>
-                Email
-                <input name="email" type="email" value={form.email} onChange={handleChange} required />
-              </label>
-
-              <div className="form-actions">
-                <button type="button" className="btn btn-ghost" onClick={handleCancel} disabled={saving}>Cancel</button>
-                <button type="submit" className="btn btn-primary" disabled={saving}>
-                  {saving ? "Saving..." : "Save changes"}
-                </button>
-              </div>
-            </form>
-          )}
-
-          {msg && <div className="form-msg success">{msg}</div>}
-          {err && <div className="form-msg error">{err}</div>}
         </div>
       </div>
     </div>

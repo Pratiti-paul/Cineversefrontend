@@ -1,0 +1,130 @@
+/* RankedRow.css - sleek ranked row with large translucent numbers */
+.ranked-row-wrap {
+  margin: 64px 0;
+  position: relative;
+  overflow: visible;
+}
+
+.ranked-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text, #eafbf6);
+  margin: 0 0 28px 68px;
+  letter-spacing: -0.02em;
+}
+
+/* horizontal list */
+.ranked-list {
+  display: flex;
+  gap: 48px;
+  align-items: flex-end;
+  padding: 0 64px 20px 64px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+/* individual item */
+.ranked-item {
+  position: relative;
+  width: 128px;            /* poster width for compact look */
+  flex: 0 0 128px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* huge faint number behind the poster */
+.ranked-number {
+  position: absolute;
+  left: -36px;
+  top: -12px;
+  font-size: 160px;
+  line-height: 1;
+  font-weight: 800;
+  color: rgba(255,255,255,0.04);
+  -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* poster block */
+.ranked-poster-link {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+}
+
+.ranked-poster {
+  width: 128px;
+  height: 192px;
+  background-color: rgba(0,0,0,0.22);
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  box-shadow: 0 18px 40px rgba(2,8,7,0.6);
+  position: relative;
+  overflow: visible;
+  transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms ease;
+  border: 4px solid rgba(0,0,0,0.25);
+}
+
+/* badge at bottom of poster */
+.ranked-badge {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: -10px;
+  display: inline-block;
+  text-align: center;
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: linear-gradient(180deg,#f38f4a,#e56b3a);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+  font-weight: 700;
+  transform: translateY(6px);
+}
+
+/* hover / focus */
+.ranked-poster:hover,
+.ranked-poster:focus {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 28px 64px rgba(2,8,7,0.7);
+}
+
+/* caption */
+.ranked-caption {
+  margin-top: 22px;
+  width: 100%;
+  text-align: center;
+}
+
+.rk-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text, #eafbf6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 128px;
+}
+
+/* responsive smaller devices */
+@media (max-width: 900px) {
+  .ranked-number { font-size: 120px; left: -28px; top: -12px; }
+  .ranked-title { margin-left: 28px; font-size: 28px; }
+  .ranked-list { gap: 18px; padding-left: 28px; padding-right: 28px; }
+  .ranked-item { width: 110px; flex: 0 0 110px; }
+  .ranked-poster { width: 110px; height: 170px; border-radius: 6px; }
+  .rk-title { font-size: 14px; max-width: 110px; }
+  .ranked-badge { font-size: 11px; bottom: -8px; left: 8px; right: 8px; }
+}
+
+@media (max-width: 520px) {
+  .ranked-number { font-size: 96px; left: -14px; top: -6px; }
+  .ranked-title { margin-left: 18px; font-size: 20px; }
+}
