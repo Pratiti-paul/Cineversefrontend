@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
-import api from "../api";           // your axios instance
+import api from "../api";           
 import { useAuth } from "../contexts/AuthContext";
 import "./Watchlist.css";
 
