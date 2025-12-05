@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { useAuth } from "../contexts/AuthContext";
+import SearchBar from "./SearchBar";
 import "./Nav.css";
 
 export default function Nav() {
@@ -46,15 +47,7 @@ export default function Nav() {
       <div className="nav-inner">
         <div className="brand" onClick={() => navigate("/")}>CineVerse</div>
         <div className="search" role="search">
-          <input
-            className="search-input"
-            placeholder="Search movies..."
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            onKeyDown={handleKey}
-            autoComplete="off"
-          />
-          <button className="search-btn" onClick={submitSearch}>🔍</button>
+          <SearchBar placeholder="Search movies..." />
         </div>
 
         <div className="right">

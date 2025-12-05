@@ -10,6 +10,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import Detailspage from "./pages/Detailspage";
 import Watchlist from "./pages/Watchlist";
 import Profile from "./pages/Profile";
+import SearchResults from "./pages/SearchResults";
 import Recommendations from "./pages/Recommendations";
 
 // Protect routes that NEED auth
@@ -33,6 +34,9 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
 
       <Route path="/movie/:id" element={<Detailspage />} />
+
+      <Route path="/search" element={<SearchResults />} />
+
 
       
       <Route

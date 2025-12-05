@@ -1,0 +1,43 @@
+.pagination {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  margin: 22px 0;
+  flex-wrap:wrap;
+}
+
+.pg-btn {
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.06);
+  background: white;
+  cursor:pointer;
+  font-weight:700;
+  min-width:44px;
+}
+
+.pg-btn[disabled] {
+  opacity:0.45;
+  cursor:not-allowed;
+}
+
+.pg-btn.active {
+  background: linear-gradient(90deg, var(--nav-accent), var(--nav-accent-2));
+  color: #012;
+  border: none;
+  box-shadow: 0 8px 20px rgba(15,150,120,0.12);
+}
+
+.pg-ellips {
+  padding: 0 8px;
+  color: #666;
+  font-weight:700;
+}
+@media (max-width: 480px) {
+  .pg-btn {
+    padding:6px 10px;
+    min-width:36px;
+    font-size:14px;
+  }
+}

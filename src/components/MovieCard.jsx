@@ -1,6 +1,7 @@
-
+// src/components/MovieCard.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../api";
 import "./MovieCard.css";
 
 const PLACEHOLDER =
@@ -11,8 +12,7 @@ const PLACEHOLDER =
 
 export default function MovieCard({
   movie = {},
-  onAdd = null,
-  addEndpoint = "http://localhost:3000/api/user/watchlist",
+  onAdd = null, // optional callback from parent
   tokenKey = null,
 }) {
   const posterPath = movie.poster_path || movie.poster || movie.backdrop_path || "";
@@ -27,53 +27,31 @@ export default function MovieCard({
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
 
-  const buildPayload = () => {
-    return {
-      tmdbId: movieId,
-      title,
-      poster: posterPath ? posterPath : null,
-      release_date: movie.release_date || null,
-    };
-  };
+  const buildPayload = () => ({
+    tmdbId: movieId,
+    title,
+    poster: posterPath || null,
+    release_date: movie.release_date || null,
+  });
 
   const defaultAdd = async () => {
     setErr(null);
     setLoading(true);
     try {
-      let token = null;
-      if (tokenKey) {
-        token = localStorage.getItem(tokenKey);
+      // call your axios instance which should have Authorization header set
+      const res = await api.post("/api/user/watchlist", buildPayload());
+      if (res.status >= 200 && res.status < 300) {
+        setAdded(true);
+        return true;
       } else {
-        token = localStorage.getItem("token") || localStorage.getItem("authToken");
+        throw new Error(res?.data?.message || `Server ${res.status}`);
       }
-
-      const res = await fetch(addEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify(buildPayload()),
-      });
-
-      if (!res.ok) {
-        let message = `Server responded ${res.status}`;
-        try {
-          const json = await res.json();
-          if (json?.message) message = json.message;
-        } catch (err) {
-          console.error("Failed to parse error response:", err);
-        }
-        throw new Error(message);
-      }
-
-      setAdded(true);
-      setLoading(false);
-      return true;
     } catch (error) {
-      setErr(error.message || "Failed to add");
-      setLoading(false);
+      console.error("defaultAdd error:", error);
+      setErr(error?.response?.data?.message || error.message || "Failed to add");
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,11 +73,8 @@ export default function MovieCard({
         ok = await defaultAdd();
       }
 
-      if (ok) {
-        setAdded(true);
-      } else {
-        if (!err) setErr("Could not add to watchlist");
-      }
+      if (ok) setAdded(true);
+      else if (!err) setErr("Could not add to watchlist");
     } catch (error) {
       setErr(error?.message || "Unexpected error");
     } finally {
@@ -108,27 +83,16 @@ export default function MovieCard({
   };
 
   return (
-    <div
-      className="movie-card"
-      role="article"
-      aria-label={title}
-      data-added={added ? "true" : "false"}
-    >
+    <div className="movie-card" role="article" aria-label={title} data-added={added ? "true" : "false"}>
       <div className="card-media">
         <Link to={movieId ? `/movie/${movieId}` : "#"} className="card-link" aria-label={`Open ${title}`}>
-          <img
-            src={img}
-            alt={title + " poster"}
-            className="movie-img"
-            onError={(e) => {
-              e.currentTarget.src = PLACEHOLDER;
-            }}
-          />
+          <img src={img} alt={title + " poster"} className="movie-img" onError={(e) => (e.currentTarget.src = PLACEHOLDER)} />
           <div className="meta">
             <div className="title">{title}</div>
             <div className="sub">{year}</div>
           </div>
         </Link>
+
         <button
           type="button"
           className={`watchlist-btn ${added ? "added" : ""}`}
@@ -140,12 +104,10 @@ export default function MovieCard({
           {loading ? (
             <span className="wl-spinner" aria-hidden="true" />
           ) : added ? (
-            // check icon (simple)
             <svg viewBox="0 0 24 24" className="wl-icon" aria-hidden="true">
               <path d="M9 16.2l-3.5-3.5L4 14.2 9 19 20 8 18.6 6.6z" />
             </svg>
           ) : (
-            // plus icon
             <svg viewBox="0 0 24 24" className="wl-icon" aria-hidden="true">
               <path d="M19 11H13V5h-2v6H5v2h6v6h2v-6h6z" />
             </svg>
@@ -153,10 +115,7 @@ export default function MovieCard({
         </button>
       </div>
 
-      {/* inline small error message (optional) */}
       {err && <div className="wl-error" role="alert">Failed: {err}</div>}
     </div>
   );
 }
-
-

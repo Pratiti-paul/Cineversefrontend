@@ -1,11 +1,13 @@
+// src/pages/Watchlist.jsx
 import React, { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
-import api from "../api";           
+import api from "../api";
 import { useAuth } from "../contexts/AuthContext";
 import "./Watchlist.css";
 
 export default function Watchlist() {
-  const { user } = useAuth ? useAuth() : { user: null };
+  // <-- call useAuth() correctly
+  const { user } = useAuth();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
@@ -15,10 +17,11 @@ export default function Watchlist() {
     setLoading(true);
     setErr("");
 
+    // token key that AuthContext persisted
     const token =
       (user && user.token) ||
-      localStorage.getItem("token") ||
-      localStorage.getItem("authToken") ||
+      localStorage.getItem("cine_token") ||
+      localStorage.getItem("auth_token") || // keep these as fallback if used elsewhere
       null;
 
     if (!token) {
@@ -27,20 +30,26 @@ export default function Watchlist() {
       return;
     }
 
-    // Use your axios api wrapper if it already includes baseURL
-    api.get("/api/user/watchlist", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    // Use axios instance with token header (api) — safer than fetch
+    api.get("/api/user/watchlist")
       .then((res) => {
         if (!mounted) return;
-        // Accept either array directly or { results: [...] }
+        // accept either array or object with results/watchlist
         const data = res?.data;
-        const arr = Array.isArray(data) ? data : Array.isArray(data?.results) ? data.results : data?.watchlist || [];
+        const arr = Array.isArray(data)
+          ? data
+          : Array.isArray(data?.results)
+          ? data.results
+          : Array.isArray(data?.watchlist)
+          ? data.watchlist
+          : [];
         setItems(arr);
       })
       .catch((err) => {
         console.error("Failed to load watchlist:", err);
-        setErr("Unable to load watchlist.");
+        // surface backend message if present
+        const message = err?.response?.data?.message || err?.message || "Unable to load watchlist.";
+        setErr(message);
       })
       .finally(() => mounted && setLoading(false));
 
@@ -68,26 +77,19 @@ export default function Watchlist() {
           <MovieCard
             key={movie.tmdbId || movie.id || movie.tmdb_id}
             movie={movie}
-            // optional: pass onAdd so the card can call back and update UI without refetch
             onAdd={async (m) => {
-              // optimistic UI: return true only if server call succeeded
+              // If the card calls onAdd, we'll use the same api instance.
               try {
                 const payload = {
                   tmdbId: m.id || m.tmdbId || m.tmdb_id,
                   title: m.title || m.name,
                   poster: m.poster_path || m.poster,
-                  release_date: m.release_date || m.first_air_date || null,
+                  release_date: m.release_date || null,
                 };
-                const t =
-                  (user && user.token) ||
-                  localStorage.getItem("token") ||
-                  localStorage.getItem("authToken");
-                const resp = await api.post(
-                  "/api/user/watchlist",
-                  payload,
-                  { headers: t ? { Authorization: `Bearer ${t}` } : {} }
-                );
-                // Optionally append to items state if adding from Watchlist page
+
+                const resp = await api.post("/api/user/watchlist", payload);
+
+                // if backend returns item or success status
                 return resp.status >= 200 && resp.status < 300;
               } catch (err) {
                 console.error("add to watchlist failed:", err);

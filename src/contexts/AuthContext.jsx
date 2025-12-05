@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
       setApiToken(savedToken);
       setToken(savedToken);
     }
-    // attempt verify (if backend provides /api/auth/verify)
     (async () => {
       try {
         if (savedToken) {

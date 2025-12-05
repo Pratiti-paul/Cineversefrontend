@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import api from "../api";             
 import Hero from "../components/Hero";
 import MovieCard from "../components/MovieCard";
-import RankedRow from "../components/RankedRow";
+// import RankedRow from "../components/RankedRow";
+import RowSkeleton from "../components/RowSkeleton"; 
 import "./Home.css";
 
 function Row({ title, items = [] }) {
@@ -77,22 +78,69 @@ export default function Home() {
   return (
     <div>
       <Hero movie={heroMovie} />
+
       <div className="container">
-        {error && <div style={{ color: "#ffb3b3", marginBottom: 12 }}>{error}</div>}
-         <RankedRow
-        title="Top 10 Movies in Netflix Today"
-        items={lists.trending}
-        limit={10}
-        showBadge={true}
-      />
+        
+        {/* Trending */}
+        {loading ? (
+          <>
+            <h3 className="section-title">Trending Now</h3>
+            <RowSkeleton />
+          </>
+        ) : (
+          <Row title="Trending Now" items={lists.trending} />
+        )}
 
+        {/* Latest */}
+        {loading ? (
+          <>
+            <h3 className="section-title">Latest Releases</h3>
+            <RowSkeleton />
+          </>
+        ) : (
+          <Row title="Latest Releases" items={lists.latest} />
+        )}
 
-        <Row title="Trending Now" items={lists.trending} />
-        <Row title="Latest Releases" items={lists.latest} />
-        <Row title="Thriller Picks" items={lists.thriller} />
-        <Row title="Drama" items={lists.drama} />
-        <Row title="Kids' Choice" items={lists.kids} />
-        <Row title="Action & Adventure" items={lists.action_adventure} />
+        {/* Thriller */}
+        {loading ? (
+          <>
+            <h3 className="section-title">Thriller Picks</h3>
+            <RowSkeleton />
+          </>
+        ) : (
+          <Row title="Thriller Picks" items={lists.thriller} />
+        )}
+
+        {/* Drama */}
+        {loading ? (
+          <>
+            <h3 className="section-title">Drama</h3>
+            <RowSkeleton />
+          </>
+        ) : (
+          <Row title="Drama" items={lists.drama} />
+        )}
+
+        {/* Kids */}
+        {loading ? (
+          <>
+            <h3 className="section-title">Kids' Choice</h3>
+            <RowSkeleton />
+          </>
+        ) : (
+          <Row title="Kids' Choice" items={lists.kids} />
+        )}
+
+        {/* Action & Adventure */}
+        {loading ? (
+          <>
+            <h3 className="section-title">Action & Adventure</h3>
+            <RowSkeleton />
+          </>
+        ) : (
+          <Row title="Action & Adventure" items={lists.action_adventure} />
+        )}
+
       </div>
     </div>
   );
