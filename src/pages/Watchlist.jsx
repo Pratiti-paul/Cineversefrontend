@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import api from "../api";
 import { useAuth } from "../contexts/AuthContext";
 import "./Watchlist.css";
@@ -59,7 +60,13 @@ export default function Watchlist() {
     <div className="watchlist-page container">
       <h1 className="wl-title">My Watchlist</h1>
 
-      {loading && <div className="wl-info">Loading your watchlist…</div>}
+      {loading && (
+        <div className="wl-grid">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <MovieCardSkeleton key={i} />
+          ))}
+        </div>
+      )}
       {err && <div className="wl-error">{err}</div>}
 
       {!loading && !err && items.length === 0 && (
@@ -69,32 +76,32 @@ export default function Watchlist() {
         </div>
       )}
 
-      <div className="wl-grid">
-        {items.map((movie) => (
-          <MovieCard
-            key={movie.tmdbId || movie.id || movie.tmdb_id}
-            movie={movie}
-            onAdd={async (m) => {
-              // If the card calls onAdd, we'll use the same api instance.
-              try {
-                const payload = {
-                  tmdbId: m.id || m.tmdbId || m.tmdb_id,
-                  title: m.title || m.name,
-                  poster: m.poster_path || m.poster,
-                  release_date: m.release_date || null,
-                };
-
-                const resp = await api.post("/api/user/watchlist", payload);
-
-                return resp.status >= 200 && resp.status < 300;
-              } catch (err) {
-                console.error("add to watchlist failed:", err);
-                return false;
-              }
-            }}
-          />
-        ))}
-      </div>
+      {!loading && (
+        <div className="wl-grid">
+          {items.map((movie) => (
+            <MovieCard
+              key={movie.tmdbId || movie.id || movie.tmdb_id}
+              movie={movie}
+              onRemove={async (m) => {
+                try {
+                  // Remove from backend
+                  const idToRemove = m.id; // Watchlist ID
+                  await api.delete(`/api/user/watchlist/${idToRemove}`);
+                  
+                  // Update local state
+                  setItems((prev) => prev.filter((item) => item.id !== idToRemove));
+                } catch (err) {
+                  console.error("remove failed", err);
+                  const msg = err?.response?.data?.message || "Failed to remove";
+                  setErr(msg);
+                  // Clear error after 3 seconds
+                  setTimeout(() => setErr(""), 3000);
+                }
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

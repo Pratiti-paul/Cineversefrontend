@@ -13,6 +13,7 @@ const PLACEHOLDER =
 export default function MovieCard({
   movie = {},
   onAdd = null, 
+  onRemove = null,
   tokenKey = null,
 }) {
   const posterPath = movie.posterPath || movie.poster || movie.backdrop_path || "";
@@ -20,7 +21,7 @@ export default function MovieCard({
   const img = posterPath ? `${base}${posterPath}` : PLACEHOLDER;
   console.log("movie card image path:", posterPath);
 
-  const movieId = movie.id || movie.tmdbId || movie.tmdb_id || null;
+  const movieId = movie.tmdbId || movie.id || movie.tmdb_id || null;
   const title = movie.title || movie.name || "Untitled";
   const year = movie.release_date ? movie.release_date.slice(0, 4) : "";
 
@@ -60,7 +61,23 @@ export default function MovieCard({
     e.stopPropagation();
     e.preventDefault();
 
-    if (added || loading) return;
+    if (loading) return;
+    
+    // If onRemove is provided, use it exclusively
+    if (onRemove) {
+      setLoading(true);
+      try {
+        await onRemove(movie);
+      } catch (error) {
+        console.error("Remove failed", error);
+        setErr("Failed to remove");
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    if (added) return;
 
     setErr(null);
     setLoading(true);
@@ -96,14 +113,18 @@ export default function MovieCard({
 
         <button
           type="button"
-          className={`watchlist-btn ${added ? "added" : ""}`}
+          className={`watchlist-btn ${added ? "added" : ""} ${onRemove ? "remove-btn" : ""}`}
           onClick={handleAddClick}
           aria-pressed={added}
-          aria-label={added ? "Added to watchlist" : "Add to watchlist"}
-          title={added ? "In watchlist" : "Add to watchlist"}
+          aria-label={onRemove ? "Remove from watchlist" : (added ? "Added to watchlist" : "Add to watchlist")}
+          title={onRemove ? "Remove from watchlist" : (added ? "In watchlist" : "Add to watchlist")}
         >
           {loading ? (
             <span className="wl-spinner" aria-hidden="true" />
+          ) : onRemove ? (
+            <svg viewBox="0 0 24 24" className="wl-icon" aria-hidden="true">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
           ) : added ? (
             <svg viewBox="0 0 24 24" className="wl-icon" aria-hidden="true">
               <path d="M9 16.2l-3.5-3.5L4 14.2 9 19 20 8 18.6 6.6z" />

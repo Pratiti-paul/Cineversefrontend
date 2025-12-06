@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import api from "../api";
 import MovieCard from "../components/MovieCard";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import "./Recommendations.css";
 
 const GENRES = [
@@ -172,7 +173,13 @@ export default function Recommendations() {
         </aside>
 
         <main className="rec-main">
-          {loading && <div className="status">Loading recommendations…</div>}
+          {loading && (
+            <div className="rec-grid">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <MovieCardSkeleton key={i} />
+              ))}
+            </div>
+          )}
           {error && <div className="status error">{error}</div>}
 
           {!loading && !error && sorted.length === 0 && (

@@ -140,6 +140,18 @@
   stroke: rgba(3,30,28,0.0);
 }
 
+.watchlist-btn.remove-btn:hover {
+  background: rgba(255, 60, 60, 0.2);
+  border-color: rgba(255, 60, 60, 0.4);
+}
+.watchlist-btn.remove-btn .wl-icon {
+  fill: rgba(230, 230, 230, 0.9);
+  stroke: none;
+}
+.watchlist-btn.remove-btn:hover .wl-icon {
+  fill: rgb(255, 80, 80);
+}
+
 .wl-error {
   margin-top: 8px;
   color: #ffb3b3;

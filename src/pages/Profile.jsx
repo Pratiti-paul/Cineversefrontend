@@ -156,7 +156,11 @@ export default function Profile() {
           <h3>Account Details</h3>
 
           {loading ? (
-            <div>Loading profile…</div>
+            <div className="details-read">
+               <div className="skeleton" style={{height: 24, width: '40%', marginBottom: 12, borderRadius: 4}}></div>
+               <div className="skeleton" style={{height: 24, width: '60%', marginBottom: 12, borderRadius: 4}}></div>
+               <div className="skeleton" style={{height: 24, width: '20%', borderRadius: 4}}></div>
+            </div>
           ) : (
             <>
               {!editing && (
