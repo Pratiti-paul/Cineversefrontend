@@ -12,12 +12,13 @@ const PLACEHOLDER =
 
 export default function MovieCard({
   movie = {},
-  onAdd = null, // optional callback from parent
+  onAdd = null, 
   tokenKey = null,
 }) {
-  const posterPath = movie.poster_path || movie.poster || movie.backdrop_path || "";
+  const posterPath = movie.posterPath || movie.poster || movie.backdrop_path || "";
   const base = import.meta.env.VITE_TMDB_IMAGE_BASE || "https://image.tmdb.org/t/p/w780";
   const img = posterPath ? `${base}${posterPath}` : PLACEHOLDER;
+  console.log("movie card image path:", posterPath);
 
   const movieId = movie.id || movie.tmdbId || movie.tmdb_id || null;
   const title = movie.title || movie.name || "Untitled";
@@ -30,7 +31,7 @@ export default function MovieCard({
   const buildPayload = () => ({
     tmdbId: movieId,
     title,
-    poster: posterPath || null,
+    posterPath: posterPath || null,
     release_date: movie.release_date || null,
   });
 

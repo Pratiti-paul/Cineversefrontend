@@ -1,4 +1,3 @@
-// src/pages/Watchlist.jsx
 import React, { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
 import api from "../api";
@@ -6,7 +5,6 @@ import { useAuth } from "../contexts/AuthContext";
 import "./Watchlist.css";
 
 export default function Watchlist() {
-  // <-- call useAuth() correctly
   const { user } = useAuth();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,11 +15,10 @@ export default function Watchlist() {
     setLoading(true);
     setErr("");
 
-    // token key that AuthContext persisted
     const token =
       (user && user.token) ||
       localStorage.getItem("cine_token") ||
-      localStorage.getItem("auth_token") || // keep these as fallback if used elsewhere
+      localStorage.getItem("auth_token") || 
       null;
 
     if (!token) {
@@ -30,11 +27,9 @@ export default function Watchlist() {
       return;
     }
 
-    // Use axios instance with token header (api) — safer than fetch
     api.get("/api/user/watchlist")
       .then((res) => {
         if (!mounted) return;
-        // accept either array or object with results/watchlist
         const data = res?.data;
         const arr = Array.isArray(data)
           ? data
@@ -44,6 +39,7 @@ export default function Watchlist() {
           ? data.watchlist
           : [];
         setItems(arr);
+        console.log("Fetched watchlist:", arr);
       })
       .catch((err) => {
         console.error("Failed to load watchlist:", err);
@@ -57,6 +53,7 @@ export default function Watchlist() {
       mounted = false;
     };
   }, [user]);
+  console.log("Watchlist items:", items);
 
   return (
     <div className="watchlist-page container">
@@ -89,7 +86,6 @@ export default function Watchlist() {
 
                 const resp = await api.post("/api/user/watchlist", payload);
 
-                // if backend returns item or success status
                 return resp.status >= 200 && resp.status < 300;
               } catch (err) {
                 console.error("add to watchlist failed:", err);

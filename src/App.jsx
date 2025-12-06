@@ -62,6 +62,10 @@ function AppRoutes() {
       <Route path="/profile" element={<Profile />} />
 
       <Route path="/recommendations" element={<Recommendations />} />
+      <Route
+        path="/watchlist"
+        element={<Watchlist />}
+      />
     </Routes>
   );
 }
