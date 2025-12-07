@@ -2,7 +2,6 @@
 
 CineVerse is a modern movie discovery platform featuring a smart recommendation system, genre browsing, and a personal watchlist. Exploring movies has never been easier or more enjoyable.
 
-![CineVerse Banner](https://via.placeholder.com/1200x400?text=CineVerse+Frontend)
 
 ## 🌟 Features
 
@@ -73,13 +72,37 @@ The app will run at `http://localhost:5173`.
 ## 📁 Project Structure
 
 ```
-frontend/src/
-├── components/      # Reusable UI components (MovieCard, Nav, Hero, etc.)
-├── contexts/        # Auth and global state contexts
-├── pages/           # Application pages (Home, Details, Profile, etc.)
-├── api.jsx          # Axios instance configuration
-├── App.jsx          # Main application component
-└── main.jsx         # Entry point
+frontend/
+├── src/
+│   ├── components/
+│   │   ├── DetailSkeleton.jsx    # Loading skeleton for movie details
+│   │   ├── Hero.jsx              # Hero section with backdrop & actions
+│   │   ├── LoadingSpinner.jsx    # Global loading indicator
+│   │   ├── MovieCard.jsx         # Reusable movie card component
+│   │   ├── MovieCardSkeleton.jsx # Skeleton for movie cards
+│   │   ├── Nav.jsx               # Navigation bar with search & profile
+│   │   ├── Pagination.jsx        # Pagination controls
+│   │   ├── RankedRow.jsx         # Horizontal scrollable movie row
+│   │   ├── RowSkeleton.jsx       # Skeleton for movie rows
+│   │   └── SearchBar.jsx         # Search input component
+│   │
+│   ├── contexts/
+│   │   └── AuthContext.jsx       # Authentication state & logic
+│   │
+│   ├── pages/
+│   │   ├── Detailspage.jsx       # Movie details, reviews, credits
+│   │   ├── Home.jsx              # Landing page with trends
+│   │   ├── Login.jsx             # User login page
+│   │   ├── Profile.jsx           # User profile management
+│   │   ├── Recommendations.jsx   # Personalized suggestions
+│   │   ├── SearchResults.jsx     # Search query results
+│   │   ├── Signup.jsx            # User registration
+│   │   ├── Watchlist.jsx         # User's saved movies
+│   │   └── WelcomePage.jsx       # Initial welcome screen
+│   │
+│   ├── api.jsx                   # Axios instance & interceptors
+│   ├── App.jsx                   # Main routing configuration
+│   └── main.jsx                  # Application entry point
 ```
 
 ---
