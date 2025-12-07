@@ -31,7 +31,6 @@ export default function Detailspage() {
         content: userReview,
         rating: userRating
       });
-      // Prepend new review
       setLocalReviews([res.data, ...localReviews]);
       setUserReview("");
     } catch (error) {
@@ -84,7 +83,6 @@ export default function Detailspage() {
       if (resReviews.status === "fulfilled") {
         setReviews(resReviews.value.data.results?.slice(0, 4) || []);
       } else {
-        // console.warn("Reviews fetch failed: ", resReviews.reason);
         setReviews([]);
       }
 
@@ -100,10 +98,8 @@ export default function Detailspage() {
         setSimilar([]);
       }
 
-      // Check Watchlist status
       if (resWatchlist.status === "fulfilled" && resDetails.status === "fulfilled") {
         const wl = resWatchlist.value.data;
-        // Handle possible response structures (array directly or .watchlist/.results)
         const list = Array.isArray(wl) ? wl : (wl.watchlist || wl.results || []);
         const currentId = resDetails.value.data.id;
         const exists = list.some(item => (item.tmdbId === currentId || item.tmdbId === Number(currentId)));
@@ -119,7 +115,6 @@ export default function Detailspage() {
   if (loading) return <DetailSkeleton />;
   if (err || !movie) return <div className="md-error">{err || "Movie not found."}</div>;
 
-  // Extract credits
   const crew = movie.credits?.crew || [];
   const castList = movie.credits?.cast || [];
   const director = crew.find((m) => m.job === "Director");

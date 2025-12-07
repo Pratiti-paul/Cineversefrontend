@@ -84,7 +84,6 @@ export default function SearchResults() {
           </div>
         )}
 
-        {/* P A G I N A T I O N */}
         <Pagination page={page} totalPages={totalPages} onChange={handlePageChange} />
       </div>
     </div>

@@ -1,4 +1,3 @@
-// src/pages/Profile.jsx
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import api from "../api";
@@ -6,16 +5,14 @@ import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  // get user and setUser if provided by AuthContext
   const auth = useAuth();
-  // defensive: if useAuth missing, avoid crash
   const userFromContext = auth?.user ?? null;
   const setUser = auth?.setUser;
   const logout = auth?.logout;
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [serverUser, setServerUser] = useState(null); // authoritative profile from backend
+  const [serverUser, setServerUser] = useState(null); 
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({ name: "", email: "" });
   const [saving, setSaving] = useState(false);
@@ -23,26 +20,20 @@ export default function Profile() {
   const [err, setErr] = useState("");
   const [watchcount, setWatchcount] = useState(null);
 
-  // helper: token config
   const token = localStorage.getItem("token") || localStorage.getItem("authToken") || null;
   const authConfig = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
 
-  // fetch profile and watchlist count
   const fetchProfileAndCounts = async () => {
     setLoading(true);
     setErr("");
     try {
-      // fetch profile
       const p = await api.get("/api/user/profile", authConfig);
       const fetchedUser = p?.data?.user ?? null;
       setServerUser(fetchedUser);
 
-      // if context has setUser, update it (keep consistent)
       if (fetchedUser && typeof setUser === "function") {
         setUser(fetchedUser);
       }
-
-      // fetch watchlist count
       const w = await api.get("/api/user/watchlist", authConfig);
       const arr = Array.isArray(w?.data) ? w.data : w?.data?.results || [];
       setWatchcount(arr.length);
@@ -58,10 +49,8 @@ export default function Profile() {
 
   useEffect(() => {
     fetchProfileAndCounts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // keep local form in sync with authoritative profile (serverUser) or context if no serverUser yet
   useEffect(() => {
     const source = serverUser ?? userFromContext ?? {};
     setForm({ name: source.name ?? "", email: source.email ?? "" });
@@ -78,14 +67,12 @@ export default function Profile() {
     try {
       const resp = await api.put("/api/user/profile", form, authConfig);
 
-      // backend should return updated user under resp.data.user
       const updatedUser = resp?.data?.user ?? null;
 
       if (updatedUser) {
         setServerUser(updatedUser);
         if (typeof setUser === "function") setUser(updatedUser);
       } else {
-        // fallback: re-fetch authoritative profile
         await fetchProfileAndCounts();
       }
 

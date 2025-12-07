@@ -1,4 +1,3 @@
-// src/components/MovieCard.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
@@ -40,7 +39,6 @@ export default function MovieCard({
     setErr(null);
     setLoading(true);
     try {
-      // call your axios instance which should have Authorization header set
       const res = await api.post("/api/user/watchlist", buildPayload());
       if (res.status >= 200 && res.status < 300) {
         setAdded(true);
@@ -63,7 +61,6 @@ export default function MovieCard({
 
     if (loading) return;
     
-    // If onRemove is provided, use it exclusively
     if (onRemove) {
       setLoading(true);
       try {

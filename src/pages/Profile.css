@@ -1,5 +1,3 @@
-/* Profile page — CineVerse themed */
-
 :root {
   --bg: #061414;
   --card: rgba(7,40,37,0.78);
@@ -10,14 +8,11 @@
   --danger: #ff7b7b;
 }
 
-/* page area */
 .profile-page {
   padding: 28px 6vw;
   min-height: calc(100vh - 80px);
   color: var(--text);
 }
-
-/* back link */
 .back-link {
   color: var(--muted);
   text-decoration: none;
@@ -26,7 +21,6 @@
   margin-bottom: 12px;
 }
 
-/* large card container */
 .profile-card {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -39,7 +33,6 @@
   align-items: start;
 }
 
-/* left column */
 .profile-left {
   padding: 18px;
   display: flex;
@@ -48,7 +41,6 @@
   align-items: center;
 }
 
-/* avatar circle */
 .avatar {
   width: 110px;
   height: 110px;
@@ -64,7 +56,6 @@
   box-shadow: 0 12px 36px rgba(3,30,28,0.5);
 }
 
-/* name & email */
 .name {
   font-size: 20px;
   font-weight: 800;
@@ -76,7 +67,6 @@
   text-align:center;
 }
 
-/* stats row */
 .stats {
   display:flex;
   gap: 12px;
@@ -88,7 +78,6 @@
 .stat-num { font-weight:800; font-size:20px; color: var(--text); }
 .stat-label { color: var(--muted); font-size:13px; }
 
-/* actions */
 .profile-actions {
   display:flex;
   gap:10px;
@@ -104,27 +93,22 @@
   font-weight:700;
 }
 
-/* primary */
 .btn-primary {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   color: #002820;
   box-shadow: 0 10px 34px rgba(11,181,150,0.12);
 }
-
-/* ghost */
 .btn-ghost {
   background: rgba(0,0,0,0.45);
   color: var(--text);
 }
 
-/* danger */
 .btn-danger {
   background: linear-gradient(90deg, rgba(255,110,110,0.08), rgba(255,80,80,0.04));
   color: var(--text);
   border: 1px solid rgba(255,80,80,0.06);
 }
 
-/* right column: details */
 .profile-right {
   padding: 6px 6px 6px 18px;
 }
@@ -134,7 +118,6 @@
   color: var(--text);
 }
 
-/* read-only details style */
 .details-read .row {
   display:flex;
   justify-content: space-between;
@@ -147,7 +130,6 @@
 .details-read .row strong { font-weight:700; color: var(--muted); font-size: 14px; }
 .details-read .row span { color: var(--text); font-weight:600; }
 
-/* form */
 .profile-form label {
   display:block;
   margin-bottom: 10px;
@@ -172,12 +154,10 @@
   margin-top: 12px;
 }
 
-/* small messages */
 .form-msg { margin-top: 12px; padding: 10px 12px; border-radius: 10px; }
 .form-msg.error { background: rgba(255,80,80,0.06); color: #ffb3b3; }
 .form-msg.success { background: rgba(30,209,179,0.06); color: #bff5e8; }
 
-/* responsive */
 @media (max-width: 920px) {
   .profile-card { grid-template-columns: 1fr; }
   .profile-left { flex-direction: row; align-items: center; justify-content: space-between; padding: 12px; }

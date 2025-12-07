@@ -1,8 +1,6 @@
 :root {
   --nav-bg: #0b2f2a;
-  /* top bar dark green */
   --nav-accent: #19ccb0;
-  /* bright teal */
   --nav-accent-2: #6ef0d3;
   --nav-text: #eafcf6;
   --nav-muted: #9fd8cc;
@@ -10,8 +8,6 @@
   --nav-height: 72px;
   --container-max: 1200px;
 }
-
-/* Reset basics */
 * {
   box-sizing: border-box;
 }
@@ -37,7 +33,6 @@
   justify-content: space-between;
 }
 
-/* Brand */
 .brand {
   color: var(--nav-accent);
   font-weight: 800;
@@ -53,7 +48,6 @@
   opacity: 0.95;
 }
 
-/* Search */
 .search {
   flex: 1 1 520px;
   display: flex;
@@ -86,7 +80,6 @@
   transform: translateY(-1px);
 }
 
-/* search button (icon) positioned on right */
 .search-btn {
   position: relative;
   margin-left: -44px;
@@ -109,14 +102,12 @@
   color: var(--nav-accent-2);
 }
 
-/* right-side nav links & profile */
 .right {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-/* main nav links */
 .nav-link {
   color: var(--nav-text);
   font-weight: 700;
@@ -131,7 +122,6 @@
   transform: translateY(-2px);
 }
 
-/* WATCHLIST link style (emphasize) */
 .nav-link.watchlist {
   background: linear-gradient(90deg, rgba(30, 209, 179, 0.08), rgba(30, 209, 179, 0.02));
   border: 1px solid rgba(30, 209, 179, 0.06);
@@ -139,7 +129,6 @@
   padding: 8px 12px;
 }
 
-/* ---------- Profile chip + popover (elegant) ---------- */
 .profile {
   position: relative;
   z-index: 60;
@@ -147,7 +136,6 @@
   align-items: center;
 }
 
-/* profile button pill */
 .profile-btn {
   display: inline-flex;
   align-items: center;
@@ -169,7 +157,6 @@
   box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
 }
 
-/* avatar circle */
 .avatar-sm {
   width: 36px;
   height: 36px;
@@ -189,7 +176,6 @@
   transform: translateY(-2px) scale(1.02);
 }
 
-/* short name and caret */
 .profile-name-short {
   font-size: 14px;
   color: var(--nav-text);
@@ -201,7 +187,6 @@
   transition: transform .18s ease;
 }
 
-/* popover card */
 .profile-menu {
   position: absolute;
   top: calc(100% + 12px);
@@ -209,7 +194,6 @@
   min-width: 240px;
   max-width: 320px;
   background: #06201d;
-  /* Solid dark green base */
   border-radius: 14px;
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -220,7 +204,6 @@
   overflow: hidden;
 }
 
-/* pop animation */
 @keyframes popIn {
   from {
     transform: translateY(-8px) scale(.98);
@@ -233,7 +216,6 @@
   }
 }
 
-/* header inside menu */
 .pm-header {
   display: flex;
   gap: 12px;
@@ -270,7 +252,6 @@
   margin-top: 2px;
 }
 
-/* menu list and items */
 .pm-list {
   display: flex;
   flex-direction: column;
@@ -296,7 +277,6 @@
   color: #e8fff9;
 }
 
-/* divider and logout style */
 .pm-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.02);
@@ -316,12 +296,10 @@
   color: #ff9ea0;
 }
 
-/* defensive: hide nested duplicate menu if any */
 .profile-menu .profile-menu {
   display: none !important;
 }
 
-/* small screen tweaks */
 @media (max-width: 1000px) {
   .search {
     flex: 1 1 360px;
@@ -341,17 +319,14 @@
     display: none;
   }
 
-  /* hide search on tiny screens — adjust if you prefer to keep */
   .profile-name-short {
     display: none;
   }
 
-  /* show avatar only */
   .nav-link {
     display: none;
   }
 
-  /* hide full nav links to save space (you can keep if you want) */
   .profile-menu {
     right: 8px;
     left: 8px;
@@ -360,7 +335,6 @@
   }
 }
 
-/* accessibility focus outlines */
 .profile-btn:focus,
 .pm-item:focus,
 .search-input:focus {
@@ -368,9 +342,6 @@
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), 0 0 0 4px rgba(25, 204, 176, 0.06);
 }
 
-
-
-/* Minimal outline icon button */
 .nav-icon-link {
   display: flex;
   align-items: center;

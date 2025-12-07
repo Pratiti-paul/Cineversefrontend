@@ -2,7 +2,6 @@ import React from "react";
 import "./Pagination.css";
 
 export default function Pagination({ page, totalPages, onChange }) {
-  // Show nothing when single page
   if (!totalPages || totalPages <= 1) return null;
 
   const pageNum = Number(page) || 1;

@@ -1,4 +1,3 @@
-// src/pages/Recommendations.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import api from "../api";
 import MovieCard from "../components/MovieCard";
@@ -31,7 +30,7 @@ export default function Recommendations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
-  const [sortBy, setSortBy] = useState("popularity"); // popularity / rating / year
+  const [sortBy, setSortBy] = useState("popularity"); 
 
   useEffect(() => {
     setLoading(true);
@@ -73,7 +72,6 @@ export default function Recommendations() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Merge unique movies across lists into a single array
   const mergedMovies = useMemo(() => {
     const map = new Map();
     Object.values(lists).forEach((arr) => {
@@ -85,16 +83,10 @@ export default function Recommendations() {
     });
     return Array.from(map.values());
   }, [lists]);
-
-  // filter by selectedGenre
   const filtered = useMemo(() => {
     if (selectedGenre === "all") return mergedMovies;
-    // Some TMDb items have genre_ids array. We rely on list grouping, but also attempt to match genre_names if present.
     return mergedMovies.filter((m) => {
-      // if item has genre_ids and we know the genre id mapping in the backend we used,
-      // fallback: check strings in m.genre_ids or m.genres
       if (Array.isArray(m.genre_ids)) {
-        // simple mapping of genre key -> ids (matches your backend GENRE_MAP)
         const GENRE_IDS = {
           thriller: [53],
           drama: [18],
@@ -108,19 +100,15 @@ export default function Recommendations() {
         return m.genre_ids.some((gid) => ids.includes(gid));
       }
       if (Array.isArray(m.genres)) {
-        // genres might be [{id,name}, ...]
         return m.genres.some((g) => (g.name || "").toLowerCase().includes(selectedGenre.replace("_", " ")));
       }
-      // fallback: try genre_names property or first genre string
       if (m.genre_names && Array.isArray(m.genre_names)) {
         return m.genre_names.some((g) => g.toLowerCase().includes(selectedGenre.replace("_", " ")));
       }
-      // otherwise allow
       return true;
     });
   }, [mergedMovies, selectedGenre]);
 
-  // sort
   const sorted = useMemo(() => {
     const arr = filtered.slice();
     arr.sort((a, b) => {

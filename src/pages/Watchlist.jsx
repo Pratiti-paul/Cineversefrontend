@@ -84,17 +84,14 @@ export default function Watchlist() {
               movie={movie}
               onRemove={async (m) => {
                 try {
-                  // Remove from backend
-                  const idToRemove = m.id; // Watchlist ID
+                  const idToRemove = m.id; 
                   await api.delete(`/api/user/watchlist/${idToRemove}`);
                   
-                  // Update local state
                   setItems((prev) => prev.filter((item) => item.id !== idToRemove));
                 } catch (err) {
                   console.error("remove failed", err);
                   const msg = err?.response?.data?.message || "Failed to remove";
                   setErr(msg);
-                  // Clear error after 3 seconds
                   setTimeout(() => setErr(""), 3000);
                 }
               }}

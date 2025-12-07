@@ -1,4 +1,3 @@
-// src/components/Nav.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
@@ -28,7 +27,6 @@ export default function Nav() {
     navigate("/login");
   };
 
-  // Search submit
   const submitSearch = () => {
     if (!q.trim()) return;
     navigate(`/search?query=${encodeURIComponent(q.trim())}`);

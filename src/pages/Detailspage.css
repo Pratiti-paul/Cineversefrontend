@@ -4,22 +4,18 @@
   min-height: 100vh;
 }
 
-/* Hero Container */
 .md-hero {
   position: relative;
   width: 100%;
   min-height: 85vh;
-  /* deeply immersive */
   display: flex;
   align-items: center;
-  /* Center vertically for full impact */
   justify-content: center;
   overflow: hidden;
   padding-bottom: 0;
   color: #fff;
 }
 
-/* Backdrop Image Layer */
 .md-hero-backdrop {
   position: absolute;
   top: 0;
@@ -31,7 +27,6 @@
   z-index: 0;
 }
 
-/* Gradient Overlay - Darker and more cinematic */
 .md-hero-gradient {
   position: absolute;
   inset: 0;
@@ -40,21 +35,18 @@
     linear-gradient(to bottom, transparent 0%, rgba(2, 8, 8, 0.8) 80%, var(--bg) 100%);
 }
 
-/* Content Wrapper */
 .md-hero-content {
   position: relative;
   z-index: 2;
   width: 100%;
   display: flex;
   align-items: center;
-  /* Align poster and info center */
   gap: 60px;
   padding: 0 40px;
   max-width: 1300px;
   margin: 0 auto;
 }
 
-/* Poster Styling */
 .md-poster-wrapper {
   flex-shrink: 0;
   width: 340px;
@@ -62,7 +54,6 @@
   overflow: hidden;
   box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3);
   transform: perspective(1000px) rotateY(2deg);
-  /* Subtle 3D effect */
 }
 
 .md-poster-img {
@@ -78,7 +69,6 @@
   transform: scale(1.02);
 }
 
-/* Info Section Styling */
 .md-hero-info {
   flex: 1;
   max-width: 700px;
@@ -94,7 +84,6 @@
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Metadata Row */
 .md-meta-row {
   display: flex;
   align-items: center;
@@ -108,7 +97,6 @@
 
 .md-badge-rating {
   background-color: #0fb59a;
-  /* Teal accent */
   color: #011a18;
   font-weight: 800;
   padding: 6px 14px;
@@ -133,7 +121,6 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Overview Text */
 .md-overview-text {
   font-size: 1.15rem;
   line-height: 1.6;
@@ -143,7 +130,6 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Credits Box - Glassmorphism */
 .md-credits-box {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
@@ -165,7 +151,6 @@
 
 .md-credit-label {
   color: #1ed1b3;
-  /* Accent color */
   font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -178,14 +163,12 @@
   font-weight: 500;
 }
 
-/* Actions Row */
 .md-ctas {
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
-/* Primary Button (Watch) */
 .md-btn-primary {
   display: inline-flex;
   align-items: center;
@@ -207,7 +190,6 @@
   box-shadow: 0 0 35px rgba(15, 181, 154, 0.5);
 }
 
-/* Circle Buttons */
 .md-btn-circle {
   width: 54px;
   height: 54px;
@@ -229,7 +211,6 @@
   transform: scale(1.05);
 }
 
-/* Responsive */
 @media (max-width: 1000px) {
   .md-hero-content {
     flex-direction: column;
@@ -293,7 +274,6 @@
   color: var(--text);
 }
 
-/* review list container */
 .md-reviews-list {
   display: flex;
   flex-direction: column;
@@ -301,7 +281,6 @@
   align-items: flex-start !important;
 }
 
-/* each review card */
 .md-review {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
@@ -341,7 +320,6 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
-/* reviewer name + date */
 .md-review-author {
   font-weight: 700;
   color: var(--text);
@@ -354,7 +332,6 @@
   margin-top: 2px;
 }
 
-/* rating chip on right */
 .md-review-rating {
   background: rgba(30, 209, 179, 0.15);
   border: 1px solid rgba(30, 209, 179, 0.25);
@@ -367,14 +344,12 @@
   margin-left: auto;
 }
 
-/* review text */
 .md-review-body {
   color: var(--muted);
   font-size: 15px;
   line-height: 1.6;
 }
 
-/* message when empty */
 .md-no-reviews {
   color: var(--muted);
   opacity: 0.7;
@@ -448,7 +423,6 @@
   }
 }
 
-/* User Reviews Styling */
 .md-user-reviews {
   margin-bottom: 40px;
 }
@@ -524,7 +498,6 @@
   margin-bottom: 30px;
   padding: 20px;
   background: rgba(15, 181, 154, 0.08);
-  /* slight teal tint */
   border-radius: 12px;
   color: #cfdcd9;
   border: 1px solid rgba(15, 181, 154, 0.15);
@@ -540,6 +513,5 @@
 
 .user-avatar {
   background: linear-gradient(135deg, #7928ca, #ff0080);
-  /* Distinct purple/pink for user */
   box-shadow: 0 4px 12px rgba(121, 40, 202, 0.3);
 }

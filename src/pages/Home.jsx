@@ -81,7 +81,6 @@ export default function Home() {
 
       <div className="container">
         
-        {/* Trending */}
         {loading ? (
           <>
             <h3 className="section-title">Trending Now</h3>
@@ -91,7 +90,6 @@ export default function Home() {
           <Row title="Trending Now" items={lists.trending} />
         )}
 
-        {/* Latest */}
         {loading ? (
           <>
             <h3 className="section-title">Latest Releases</h3>
@@ -101,7 +99,6 @@ export default function Home() {
           <Row title="Latest Releases" items={lists.latest} />
         )}
 
-        {/* Thriller */}
         {loading ? (
           <>
             <h3 className="section-title">Thriller Picks</h3>
@@ -111,7 +108,6 @@ export default function Home() {
           <Row title="Thriller Picks" items={lists.thriller} />
         )}
 
-        {/* Drama */}
         {loading ? (
           <>
             <h3 className="section-title">Drama</h3>
@@ -121,7 +117,6 @@ export default function Home() {
           <Row title="Drama" items={lists.drama} />
         )}
 
-        {/* Kids */}
         {loading ? (
           <>
             <h3 className="section-title">Kids' Choice</h3>
@@ -131,7 +126,6 @@ export default function Home() {
           <Row title="Kids' Choice" items={lists.kids} />
         )}
 
-        {/* Action & Adventure */}
         {loading ? (
           <>
             <h3 className="section-title">Action & Adventure</h3>

@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
               setToken(res.data.token);
             }
           } else {
-            // fallback to stored user
             const saved = localStorage.getItem("cine_user");
             if (saved) setUser(JSON.parse(saved));
           }
@@ -81,7 +80,6 @@ export const AuthProvider = ({ children }) => {
   const signup = async (userData) => {
     try {
       const res = await api.post("/api/auth/signup", userData);
-      // if backend returns token+user, persist
       if (res?.data?.token) {
         persistAuth(res.data.token, res.data.user || null);
         return { success: true, user: res.data.user || null };

@@ -1,6 +1,3 @@
-/* CineVerse Auth Card - Login / Signup shared styles */
-
-/* Page background — match app dark teal gradient */
 :root {
   --bg-1: #041211;
   --bg-2: #05211e;
@@ -14,7 +11,6 @@
   --text: #e6fff8;
 }
 
-/* page wrapper (the container that uses your global app layout) */
 body, .auth-root {
   background: linear-gradient(180deg, var(--bg-1) 0%, #07211f 45%, var(--bg-2) 100%);
   min-height: 100vh;
@@ -22,8 +18,6 @@ body, .auth-root {
   font-family: "Georgia", serif;
   color: var(--text);
 }
-
-/* center the card vertically and horizontally */
 .card {
   width: 520px;
   max-width: calc(100% - 40px);
@@ -41,7 +35,6 @@ body, .auth-root {
   box-sizing: border-box;
 }
 
-/* subtle decorative outline glow */
 .card::before {
   content: "";
   position: absolute;
@@ -52,7 +45,6 @@ body, .auth-root {
   mix-blend-mode: screen;
 }
 
-/* heading */
 .card h2 {
   margin: 0 0 6px 0;
   font-size: 34px;
@@ -62,7 +54,6 @@ body, .auth-root {
   font-weight: 800;
 }
 
-/* optional subtitle if present (not in your JSX) */
 .card p.subtitle {
   margin: 6px 0 18px 0;
   color: var(--muted);
@@ -70,7 +61,6 @@ body, .auth-root {
   font-size: 14px;
 }
 
-/* the form layout */
 .form {
   display: flex;
   flex-direction: column;
@@ -78,7 +68,6 @@ body, .auth-root {
   margin-top: 18px;
 }
 
-/* input fields */
 .form input {
   appearance: none;
   -webkit-appearance: none;
@@ -93,17 +82,14 @@ body, .auth-root {
   box-shadow: 0 6px 18px rgba(0,0,0,0.45), inset 0 -6px 14px rgba(0,0,0,0.18);
 }
 
-/* placeholder color */
 .form input::placeholder { color: rgba(160,235,220,0.4); }
 
-/* focus state */
 .form input:focus {
   border-color: rgba(30,209,179,0.28);
   box-shadow: 0 10px 28px rgba(12,60,56,0.36), 0 0 0 6px rgba(30,209,179,0.06);
   transform: translateY(-1px);
 }
 
-/* error / success messages */
 .error, .success {
   padding: 10px 12px;
   border-radius: 10px;
@@ -120,7 +106,6 @@ body, .auth-root {
   border: 1px solid rgba(30,209,179,0.06);
 }
 
-/* main CTA button */
 .card button[type="submit"] {
   margin-top: 6px;
   padding: 14px 24px;
@@ -130,22 +115,19 @@ body, .auth-root {
   cursor: pointer;
   border-radius: 40px;
   display: inline-block;
-  color: #002822; /* dark text on bright gradient */
+  color: #002822; 
   background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
   box-shadow: 0 16px 44px rgba(11,181,150,0.14);
   transition: transform 120ms ease, box-shadow 150ms ease, opacity 120ms ease;
 }
 
-/* disabled */
 .card button[disabled] { opacity: 0.64; cursor: default; transform: none; }
 
-/* hover/focus on CTA */
 .card button[type="submit"]:hover {
   transform: translateY(-3px);
   box-shadow: 0 22px 54px rgba(11,181,150,0.18);
 }
 
-/* small auth switch text */
 .auth-switch {
   margin-top: 18px;
   text-align: center;
@@ -159,7 +141,6 @@ body, .auth-root {
 }
 .auth-link:hover { text-decoration: underline; }
 
-/* make the "back to home" link or top-left spacing if your layout has it */
 .back-link {
   position: absolute;
   left: 18px;
@@ -169,7 +150,6 @@ body, .auth-root {
   font-size: 14px;
 }
 
-/* responsive adjustments */
 @media (max-width: 720px) {
   .card {
     margin: 28px 16px;
@@ -180,5 +160,4 @@ body, .auth-root {
   .card button[type="submit"] { padding: 12px 18px; font-size: 15px; }
 }
 
-/* small visual flourish - rounded form field separators */
 .form input + input { margin-top: 6px; }

@@ -27,7 +27,6 @@
   width: 50%;
 }
 
-/* Row container */
 .skeleton-row {
   display: flex;
   gap: 12px;

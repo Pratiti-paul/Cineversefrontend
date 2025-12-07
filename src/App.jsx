@@ -13,14 +13,12 @@ import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
 import Recommendations from "./pages/Recommendations";
 
-// Protect routes that NEED auth
 function RequireAuth({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingSpinner />;
   return user ? children : <Navigate to="/login" replace />;
 }
 
-// Protect login/signup from logged users
 function RequireGuest({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingSpinner />;
