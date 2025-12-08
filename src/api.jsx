@@ -10,6 +10,16 @@ export const setApiToken = (token) => {
   else delete api.defaults.headers.common["Authorization"];
 };
 
+export const collectionAPI = {
+  create: (data) => api.post("/api/collections", data),
+  getAll: () => api.get("/api/collections"),
+  getOne: (id) => api.get(`/api/collections/${id}`),
+  update: (id, data) => api.put(`/api/collections/${id}`, data),
+  delete: (id) => api.delete(`/api/collections/${id}`),
+  addItem: (id, data) => api.post(`/api/collections/${id}/items`, data),
+  removeItem: (id, tmdbId) => api.delete(`/api/collections/${id}/items/${tmdbId}`),
+};
+
 export default api;
 
 

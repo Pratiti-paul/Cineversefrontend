@@ -93,6 +93,10 @@ export default function Nav() {
                   Recommendations
                 </button>
 
+                <button className="pm-item" onClick={() => { navigate("/collections"); setOpen(false); }}>
+                  My Collections
+                </button>
+
                 <button className="pm-item" onClick={() => { navigate("/watchlist"); setOpen(false); }}>
                   Watchlist
                 </button>

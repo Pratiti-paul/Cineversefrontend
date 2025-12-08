@@ -12,6 +12,8 @@ import Watchlist from "./pages/Watchlist";
 import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
 import Recommendations from "./pages/Recommendations";
+import Collections from "./pages/Collections";
+import CollectionDetails from "./pages/CollectionDetails";
 
 function RequireAuth({ children }) {
   const { user, loading } = useAuth();
@@ -60,6 +62,16 @@ function AppRoutes() {
       <Route path="/profile" element={<Profile />} />
 
       <Route path="/recommendations" element={<Recommendations />} />
+      
+      <Route
+        path="/collections"
+        element={
+          <RequireAuth>
+            <Collections />
+          </RequireAuth>
+        }
+      />
+      <Route path="/collections/:id" element={<CollectionDetails />} />
       <Route
         path="/watchlist"
         element={<Watchlist />}

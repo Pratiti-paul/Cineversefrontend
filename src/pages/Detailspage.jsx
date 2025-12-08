@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../api"; 
+import api, { collectionAPI } from "../api"; 
 import MovieCard from "../components/MovieCard";
 import DetailSkeleton from "../components/DetailSkeleton";
 import { useAuth } from "../contexts/AuthContext";
@@ -58,6 +58,36 @@ export default function Detailspage() {
   };
 
   const [inWatchlist, setInWatchlist] = useState(false);
+  
+  // Collections Logic
+  const [showCollModal, setShowCollModal] = useState(false);
+  const [myCollections, setMyCollections] = useState([]);
+
+  const openCollectionModal = async () => {
+    if (!user) { alert("Please login first"); return; }
+    setShowCollModal(true);
+    try {
+      const res = await collectionAPI.getAll();
+      setMyCollections(res.data);
+    } catch(e) { console.error(e); }
+  };
+
+  const handleAddToCollection = async (collectionId) => {
+    try {
+      await collectionAPI.addItem(collectionId, {
+        tmdbId: movie.id,
+        title: movie.title || movie.name,
+        posterPath: movie.poster_path,
+        releaseDate: movie.release_date
+      });
+      alert("Added to collection!");
+      setShowCollModal(false);
+    } catch (error) {
+       console.error(error);
+       if (error.response?.status === 409) alert("Already in collection");
+       else alert("Failed to add");
+    }
+  };
 
   /* New: handle delete */
   const handleDeleteReview = async (reviewId) => {
@@ -228,10 +258,40 @@ export default function Detailspage() {
                  )}
               </button>
 
+              <button className="md-btn-circle" title="Add to Collection" onClick={openCollectionModal}>
+                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+              </button>
+
               <button className="md-btn-circle" title="Share">
                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8m-4-6l-4-4-4 4m4-4v13"/></svg>
               </button>
             </div>
+
+            {/* Collection Modal */}
+            {showCollModal && (
+              <div className="modal-overlay" onClick={() => setShowCollModal(false)}>
+                <div className="modal-content" onClick={e => e.stopPropagation()}>
+                  <h2>Save to Collection</h2>
+                  <div style={{maxHeight: 300, overflowY:'auto'}}>
+                    {myCollections.length === 0 ? (
+                      <p>No collections found. <a href="/collections" style={{color:'var(--accent)'}}>Create one</a></p>
+                    ) : (
+                      myCollections.map(c => (
+                        <div 
+                          key={c.id} 
+                          style={{padding:12, borderBottom:'1px solid #333', cursor:'pointer', display:'flex', justifyContent:'space-between'}}
+                          onClick={() => handleAddToCollection(c.id)}
+                        >
+                          <span>{c.title}</span>
+                          <span style={{color:'#666'}}>{c.items?.length || 0} items</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                  <button onClick={() => setShowCollModal(false)} className="btn-cancel" style={{marginTop:15, width:'100%'}}>Close</button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </header>
