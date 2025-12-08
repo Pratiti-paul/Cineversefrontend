@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { collectionAPI } from "../api";
+import { useToast } from "../contexts/ToastContext";
 import "./Collections.css";
 
 export default function Collections() {
@@ -10,6 +11,7 @@ export default function Collections() {
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const { addToast } = useToast();
 
   useEffect(() => {
     fetchCollections();
@@ -21,6 +23,7 @@ export default function Collections() {
       setCollections(res.data);
     } catch (err) {
       console.error(err);
+      addToast("Failed to fetch collections", "error");
     } finally {
       setLoading(false);
     }
@@ -36,8 +39,9 @@ export default function Collections() {
       setNewDesc("");
       setIsPublic(false);
       fetchCollections();
+      addToast("Collection created successfully", "success");
     } catch (err) {
-      alert("Failed to create collection");
+      addToast("Failed to create collection", "error");
     }
   };
 

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { collectionAPI } from "../api";
 import MovieCard from "../components/MovieCard";
+import { useToast } from "../contexts/ToastContext";
 import "./CollectionDetails.css";
 
 export default function CollectionDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToast } = useToast();
   const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -31,7 +33,7 @@ export default function CollectionDetails() {
       setEditPublic(res.data.isPublic);
     } catch (err) {
       console.error(err);
-      alert("Failed to load collection or access denied");
+      addToast("Failed to load collection or access denied", "error");
       navigate("/collections");
     } finally {
       setLoading(false);
@@ -47,8 +49,9 @@ export default function CollectionDetails() {
       });
       setEditing(false);
       fetchData();
+      addToast("Collection updated successfully", "success");
     } catch (err) {
-      alert("Failed to update");
+      addToast("Failed to update collection", "error");
     }
   };
 
@@ -61,10 +64,11 @@ export default function CollectionDetails() {
   const executeDelete = async () => {
     try {
       await collectionAPI.delete(id);
+      addToast("Collection deleted", "success");
       navigate("/collections", { replace: true });
     } catch (err) {
       console.error(err);
-      alert("Error: " + (err.response?.data?.error || err.message));
+      addToast("Error: " + (err.response?.data?.error || err.message), "error");
       setShowDeleteConfirm(false); // Close if failed
     }
   };
@@ -78,12 +82,11 @@ export default function CollectionDetails() {
         ...prev,
         items: prev.items.filter(item => item.tmdbId !== tmdbId && item.tmdbId !== Number(tmdbId))
       }));
+      addToast("Movie removed from collection", "success");
     } catch (err) {
-      alert("Failed to remove item");
+      addToast("Failed to remove item", "error");
     }
   };
-  
-
   
   if (loading) return <div className="container" style={{paddingTop:100}}>Loading...</div>;
   if (!collection) return null;

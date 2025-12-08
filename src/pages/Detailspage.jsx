@@ -5,12 +5,14 @@ import api, { collectionAPI } from "../api";
 import MovieCard from "../components/MovieCard";
 import DetailSkeleton from "../components/DetailSkeleton";
 import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
 import "./Detailspage.css";
 
 export default function Detailspage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { addToast } = useToast();
 
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -33,9 +35,10 @@ export default function Detailspage() {
       });
       setLocalReviews([res.data, ...localReviews]);
       setUserReview("");
+      addToast("Review posted successfully", "success");
     } catch (error) {
       console.error("Post review failed", error);
-      alert("Failed to post review");
+      addToast("Failed to post review", "error");
     }
   };
 
@@ -52,8 +55,10 @@ export default function Detailspage() {
       };
       await api.post("/api/user/watchlist", payload);
       setInWatchlist(true);
+      addToast("Added to Watchlist", "success");
     } catch (error) {
        console.error("Watchlist add failed", error);
+       addToast("Failed to add to watchlist", "error");
     }
   };
 
@@ -64,7 +69,7 @@ export default function Detailspage() {
   const [myCollections, setMyCollections] = useState([]);
 
   const openCollectionModal = async () => {
-    if (!user) { alert("Please login first"); return; }
+    if (!user) { addToast("Please login first", "info"); return; }
     setShowCollModal(true);
     try {
       const res = await collectionAPI.getAll();
@@ -80,12 +85,12 @@ export default function Detailspage() {
         posterPath: movie.poster_path,
         releaseDate: movie.release_date
       });
-      alert("Added to collection!");
+      addToast("Added to collection!", "success");
       setShowCollModal(false);
     } catch (error) {
        console.error(error);
-       if (error.response?.status === 409) alert("Already in collection");
-       else alert("Failed to add");
+       if (error.response?.status === 409) addToast("Already in collection", "info");
+       else addToast("Failed to add", "error");
     }
   };
 
@@ -95,9 +100,10 @@ export default function Detailspage() {
       await api.delete(`/api/reviews/${reviewId}`);
       // remove from local state
       setLocalReviews(prev => prev.filter(r => r.id !== reviewId));
+      addToast("Review deleted", "success");
     } catch(err) {
       console.error(err);
-      alert("Failed to delete review");
+      addToast("Failed to delete review", "error");
     }
   };
 
