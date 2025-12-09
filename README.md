@@ -2,6 +2,8 @@
 
 CineVerse is a modern movie discovery platform featuring a smart recommendation system, genre browsing, and a personal watchlist. Exploring movies has never been easier or more enjoyable.
 
+The backend git link-
+https://github.com/Pratiti-paul/Cineversebackend.git
 
 ## 🌟 Features
 
