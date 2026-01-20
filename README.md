@@ -1,35 +1,35 @@
-# 🎬 CineVerse Frontend
+# CineVerse Frontend
 
 CineVerse is a modern movie discovery platform featuring a smart recommendation system, genre browsing, and a personal watchlist. Exploring movies has never been easier or more enjoyable.
 
 The backend git link-
 https://github.com/Pratiti-paul/Cineversebackend.git
 
-## 🌟 Features
+## Features
 
-### 🎥 Movie Discovery
+### Movie Discovery
 - **Latest Releases**: Stay updated with the newest movies.
 - **Trending**: See what's popular right now.
 - **Recommendations**: Personalized suggestions based on your interests.
 
-### 🎭 Genre-Based Browsing
+### Genre-Based Browsing
 Explore movies by genre:
 - Thriller, Drama, Family
 - Action & Adventure, Comedy
 - Horror, Animation, and more.
 
-### � Smart Search
+### Smart Search
 - Real-time search by title.
 - Live suggestions and paginated results.
 
-### 📌 User Features
+### User Features
 - **Watchlist**: Persist your favorite movies to your personal list.
 - **Reviews**: Read community reviews and write your own.
 - **Authentication**: Secure Signup and Login.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: React (Vite)
 - **Routing**: React Router DOM
@@ -39,35 +39,33 @@ Explore movies by genre:
 
 ---
 
-## 🏗️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Node.js (v16+)
 - npm or yarn
 
-### 1️⃣ Clone the Repository
+### 1) Clone the Repository
 ```bash
 git clone https://github.com/Pratiti-paul/CineVerse.git
 cd CineVerse/frontend
 ```
 
-### 2️⃣ Install Dependencies
+### 2) Install Dependencies
 ```bash
 npm install
 ```
 
-### 3️⃣ Configure Environment
+### 3) Configure Environment
 Create a `.env` file in the `frontend` directory:
 ```env
 VITE_API_URL="http://localhost:8080"
 VITE_TMDB_IMAGE_BASE="https://image.tmdb.org/t/p/original"
 ```
 
-### 4️⃣ Start Development Server
+### 4) Start Development Server
 ```bash
 npm run dev
-```
-The app will run at `http://localhost:5173`.
 
 ---
 
@@ -108,6 +106,9 @@ frontend/
 ```
 
 ---
+
+## Made with ❤️ by Pratiti Paul 
+[GitHub](https://github.com/Pratiti-paul)
 
 
 ## Made with ❤️ by Pratiti Paul 
