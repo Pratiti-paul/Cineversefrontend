@@ -93,7 +93,28 @@
     margin: 0;
     background: linear-gradient(to right, #fff, #9cdad3);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+
+@media (max-width: 768px) {
+    .collections-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding-top: 100px;
+    }
+
+    .collections-header h1 {
+        font-size: 2.4rem;
+    }
+
+    .collections-grid {
+        padding: 0 20px;
+        grid-template-columns: 1fr;
+        /* Full width cards on mobile */
+    }
 }
 
 .collections-grid {

@@ -109,9 +109,6 @@ frontend/
 
 ---
 
-## 📜 License
-MIT License.
 
-## 👨‍💻 Author
-**Pratiti Paul**  
-- [GitHub](https://github.com/Pratiti-paul)
+## Made with ❤️ by Pratiti Paul 
+[GitHub](https://github.com/Pratiti-paul)
