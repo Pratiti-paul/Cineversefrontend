@@ -39,36 +39,6 @@ Explore movies by genre:
 
 ---
 
-## Installation & Setup
-
-### Prerequisites
-- Node.js (v16+)
-- npm or yarn
-
-### 1) Clone the Repository
-```bash
-git clone https://github.com/Pratiti-paul/CineVerse.git
-cd CineVerse/frontend
-```
-
-### 2) Install Dependencies
-```bash
-npm install
-```
-
-### 3) Configure Environment
-Create a `.env` file in the `frontend` directory:
-```env
-VITE_API_URL="http://localhost:8080"
-VITE_TMDB_IMAGE_BASE="https://image.tmdb.org/t/p/original"
-```
-
-### 4) Start Development Server
-```bash
-npm run dev
-
----
-
 ## Made with ❤️ by Pratiti Paul 
 [GitHub](https://github.com/Pratiti-paul)
 
