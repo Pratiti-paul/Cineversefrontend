@@ -69,47 +69,6 @@ npm run dev
 
 ---
 
-## 📁 Project Structure
-
-```
-frontend/
-├── src/
-│   ├── components/
-│   │   ├── DetailSkeleton.jsx    # Loading skeleton for movie details
-│   │   ├── Hero.jsx              # Hero section with backdrop & actions
-│   │   ├── LoadingSpinner.jsx    # Global loading indicator
-│   │   ├── MovieCard.jsx         # Reusable movie card component
-│   │   ├── MovieCardSkeleton.jsx # Skeleton for movie cards
-│   │   ├── Nav.jsx               # Navigation bar with search & profile
-│   │   ├── Pagination.jsx        # Pagination controls
-│   │   ├── RankedRow.jsx         # Horizontal scrollable movie row
-│   │   ├── RowSkeleton.jsx       # Skeleton for movie rows
-│   │   └── SearchBar.jsx         # Search input component
-│   │
-│   ├── contexts/
-│   │   └── AuthContext.jsx       # Authentication state & logic
-│   │
-│   ├── pages/
-│   │   ├── Detailspage.jsx       # Movie details, reviews, credits
-│   │   ├── Home.jsx              # Landing page with trends
-│   │   ├── Login.jsx             # User login page
-│   │   ├── Profile.jsx           # User profile management
-│   │   ├── Recommendations.jsx   # Personalized suggestions
-│   │   ├── SearchResults.jsx     # Search query results
-│   │   ├── Signup.jsx            # User registration
-│   │   ├── Watchlist.jsx         # User's saved movies
-│   │   └── WelcomePage.jsx       # Initial welcome screen
-│   │
-│   ├── api.jsx                   # Axios instance & interceptors
-│   ├── App.jsx                   # Main routing configuration
-│   └── main.jsx                  # Application entry point
-```
-
----
-
 ## Made with ❤️ by Pratiti Paul 
 [GitHub](https://github.com/Pratiti-paul)
 
-
-## Made with ❤️ by Pratiti Paul 
-[GitHub](https://github.com/Pratiti-paul)
