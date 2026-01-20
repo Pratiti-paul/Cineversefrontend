@@ -1,6 +1,6 @@
 :root {
   --bg: #071514;
-  --card-bg: rgba(6,30,28,0.56);
+  --card-bg: rgba(6, 30, 28, 0.56);
   --muted: #9edfcf;
   --text: #e9fff8;
   --accent: #1fd6bd;
@@ -23,15 +23,19 @@
   letter-spacing: -0.5px;
 }
 
-.wl-info, .wl-error, .wl-empty {
-  background: rgba(255,255,255,0.02);
+.wl-info,
+.wl-error,
+.wl-empty {
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 10px;
   padding: 14px 18px;
   color: var(--muted);
   margin-bottom: 18px;
 }
 
-.wl-empty p { margin: 0 0 6px 0; }
+.wl-empty p {
+  margin: 0 0 6px 0;
+}
 
 .wl-grid {
   display: grid;
@@ -41,19 +45,45 @@
   align-items: start;
 }
 
-.wl-grid > * {
+.wl-grid>* {
   transform: translateY(8px);
   opacity: 0;
   animation: wl-appear 360ms ease forwards;
 }
-@keyframes wl-appear { to { transform: translateY(0); opacity: 1; } }
+
+@keyframes wl-appear {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
 @media (max-width: 900px) {
-  .wl-title { font-size: 32px; }
-  .watchlist-page { padding: 36px 4vw; }
-  .wl-grid { gap: 14px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .wl-title {
+    font-size: 32px;
+  }
+
+  .watchlist-page {
+    padding: 36px 4vw;
+  }
+
+  .wl-grid {
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
 }
+
 @media (max-width: 520px) {
-  .wl-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .wl-title { font-size: 28px; }
+  .wl-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .wl-title {
+    font-size: 28px;
+  }
+
+  .watchlist-page {
+    padding: 24px 16px;
+  }
 }
